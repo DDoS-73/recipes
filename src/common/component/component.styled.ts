@@ -1,7 +1,18 @@
 import styled from 'styled-components';
+import { Field } from 'formik';
 
-export const Input = styled.input`
+export const Input = styled(Field)`
   width: 100%;
+  padding: 10px 30px;
+  border: 1px solid var(--grey-border);
+  background-color: #fff;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+`;
+
+export const Select = styled.select`
+  width: 25%;
   padding: 10px 30px;
   border: 1px solid var(--grey-border);
   background-color: #fff;
@@ -28,7 +39,7 @@ export const FilledButton = styled.button<{
   background-color: ${(props) => (props.backgroundColor === 'green' ? `#088149` : '#FF612F')};
   border-radius: ${(props) => props.borderRadius};
   border: ${(props) => `1px solid ${props.backgroundColor}`};
-  margin: 20px 0;
+  margin: 1.75rem 0;
   padding: 10px;
   color: white;
   font-size: 1.25rem;
@@ -39,8 +50,15 @@ export const OutlineButton = styled.button<{ borderRadius: string; width: string
   color: ${(props) => (props.color === 'green' ? `#088149` : '#FF612F')};
   border: ${(props) => `1px solid ${props.color}`};
   border-radius: ${(props) => props.borderRadius};
-  margin: 20px 0;
+  margin: 1.75rem 0;
   padding: 10px;
   background-color: white;
   font-size: 1.25rem;
+`;
+
+export const FormItem = styled.div`
+  border-radius: 1rem;
+  background-color: white;
+  padding: 20px 45px;
+  margin-bottom: 2rem;
 `;

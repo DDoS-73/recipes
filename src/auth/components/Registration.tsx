@@ -1,11 +1,12 @@
 import React from 'react';
 import * as Styled from '../../common/component/component.styled';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { RegistrationSchema } from '../../common/schema/registration-yup';
 
 interface RegistrationValues {
   name: string;
   surname: string;
+  username: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -17,6 +18,7 @@ const Registration = () => {
     password: '',
     name: '',
     surname: '',
+    username: '',
     confirmPassword: ''
   };
   return (
@@ -38,32 +40,37 @@ const Registration = () => {
           <Form>
             <div className="row">
               <div className="col-6">
-                <Field as={Styled.Input} type="text" name="name" placeholder="Ім’я" />
+                <Styled.Input type="text" name="name" placeholder="Ім’я" />
                 {errors.name && touched.name ? (
                   <Styled.ErrorText>{errors.name}</Styled.ErrorText>
                 ) : null}
               </div>
               <div className="col-6">
-                <Field as={Styled.Input} type="text" name="surname" placeholder="Прізвище" />
+                <Styled.Input type="text" name="surname" placeholder="Прізвище" />
                 {errors.surname && touched.surname ? (
                   <Styled.ErrorText>{errors.surname}</Styled.ErrorText>
                 ) : null}
               </div>
             </div>
-            <Field as={Styled.Input} type="email" name="email" placeholder="Пошта" />
-            {errors.email && touched.email ? (
-              <Styled.ErrorText>{errors.email}</Styled.ErrorText>
-            ) : null}
-            <Field as={Styled.Input} type="password" name="password" placeholder="Пароль" />
+            <div className="row">
+              <div className="col-6">
+                <Styled.Input type="email" name="email" placeholder="Пошта" />
+                {errors.email && touched.email ? (
+                  <Styled.ErrorText>{errors.email}</Styled.ErrorText>
+                ) : null}
+              </div>
+              <div className="col-6">
+                <Styled.Input type="text" name="username" placeholder="Юзернейм" />
+                {errors.username && touched.username ? (
+                  <Styled.ErrorText>{errors.username}</Styled.ErrorText>
+                ) : null}
+              </div>
+            </div>
+            <Styled.Input type="password" name="password" placeholder="Пароль" />
             {errors.password && touched.password ? (
               <Styled.ErrorText>{errors.password}</Styled.ErrorText>
             ) : null}
-            <Field
-              as={Styled.Input}
-              type="password"
-              name="password"
-              placeholder="Підтвердіть пароль"
-            />
+            <Styled.Input type="password" name="confirmPassword" placeholder="Підтвердіть пароль" />
             {errors.confirmPassword && touched.confirmPassword ? (
               <Styled.ErrorText>{errors.confirmPassword}</Styled.ErrorText>
             ) : null}

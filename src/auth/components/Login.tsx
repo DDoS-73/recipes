@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Styled from '../../common/component/component.styled';
 import { LoginSchema } from '../../common/schema/login-yup';
 
@@ -27,11 +27,11 @@ const Login = () => {
         }}>
         {({ errors, touched }) => (
           <Form>
-            <Field as={Styled.Input} type="email" name="email" placeholder="Пошта" />
+            <Styled.Input type="email" name="email" placeholder="Пошта" />
             {errors.email && touched.email ? (
               <Styled.ErrorText>{errors.email}</Styled.ErrorText>
             ) : null}
-            <Field as={Styled.Input} type="password" name="password" placeholder="Пароль" />
+            <Styled.Input type="password" name="password" placeholder="Пароль" />
             {errors.password && touched.password ? (
               <Styled.ErrorText>{errors.password}</Styled.ErrorText>
             ) : null}

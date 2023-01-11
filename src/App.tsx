@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import AuthWrapper from './auth/AuthWrapper';
+import RecipeForm from './recipe/recipe-form/RecipeForm';
 
 function App() {
-  return <AuthWrapper />;
+  return <RecipeForm />;
 }
 
 export default App;
