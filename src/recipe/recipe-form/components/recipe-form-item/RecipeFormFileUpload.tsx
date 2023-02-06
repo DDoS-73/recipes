@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import style from './RecipeFormItem.module.css';
 import * as Styled from '../../../../common/component/component.styled';
-import { FormikValues } from 'formik';
+import { Field, FormikValues } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   placeholder: string;
@@ -16,9 +18,10 @@ const RecipeFormFileUpload: FC<Props> = ({ placeholder, name, label, setFieldVal
     <Styled.FormItem>
       <h4>{label}</h4>
       <label className={style.fileUpload}>
-        <i className="fa fa-cloud-upload"></i>
+        <FontAwesomeIcon className="me-2" icon={faDownload} />
         {values[name].length ? 'Файл додано' : placeholder}
-        <Styled.Input
+        <Field
+          component={Styled.Input}
           type="file"
           placeholder={placeholder}
           name={'random'}

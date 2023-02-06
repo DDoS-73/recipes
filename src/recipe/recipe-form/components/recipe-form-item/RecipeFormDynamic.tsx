@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { FieldArray, FormikValues } from 'formik';
+import { Field, FieldArray, FormikValues } from 'formik';
 import * as Styled from '../../../../common/component/component.styled';
+import styles from './RecipeFormItem.module.css';
 
 interface Props {
   values: FormikValues;
@@ -24,19 +25,25 @@ const RecipeFormDynamic: FC<Props> = ({ values, setValues, name, label }) => {
           <>
             {values[name].map((item: string, i: number) => {
               return (
-                <div key={i}>
-                  <Styled.Input type="text" name={`${name}.${i}`} placeholder={i + 1} />
+                <div key={i} className="w-25 d-flex">
+                  <span className={styles.number}>{i + 1}. </span>
+                  <Field
+                    as={Styled.OutlineInput}
+                    type="text"
+                    name={`${name}.${i}`}
+                    placeholder={name === 'ingredients' ? 'Інгрідієнт' : 'Крок'}
+                  />
                 </div>
               );
             })}
-            <Styled.OutlineButton
-              color="green"
+            <Styled.FilledButton
+              backgroundColor="green"
               width="250px"
               borderRadius="8px"
               onClick={() => handleClick(values, setValues)}
               type="button">
-              Додати
-            </Styled.OutlineButton>
+              Додати ще
+            </Styled.FilledButton>
           </>
         )}
       </FieldArray>

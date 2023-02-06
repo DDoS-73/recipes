@@ -1,0 +1,19 @@
+.background {
+    background-image: url('../assets/images/Main picture.png'), url('../assets/images/Ellipse 6.png');
+    background-position: center center, 150px -200px;
+    background-size: 80%, 80%;
+    background-repeat: no-repeat, no-repeat;
+    object-fit: cover;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    max-width: 500px;
+    margin-bottom: 40px;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    max-width: 500px;
+}

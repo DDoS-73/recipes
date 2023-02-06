@@ -3,14 +3,16 @@ input[type="file"] {
 }
 .fileUpload {
     border: 1px solid #ccc;
+    border-radius: 0.25rem;
     display: inline-block;
-    padding: 6px 12px;
+    padding: 10px 40px;
     cursor: pointer;
     margin-top: 2rem;
+    color: var(--main-green-color);
 }
 
 .time {
-    width: 100px;
+    width: 80px;
 }
 
 input::-webkit-outer-spin-button,
@@ -28,4 +30,12 @@ input[type=number] {
 .radio {
     font-size: 1.25rem;
     margin-left: 2rem;
+    color: var(--grey-text);
+}
+
+.number {
+    font-size: 1.25rem;
+    margin-right: 1rem;
+    margin-top: 2rem;
+    color: var(--grey-border);
 }

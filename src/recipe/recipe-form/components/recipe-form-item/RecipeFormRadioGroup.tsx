@@ -6,13 +6,13 @@ import style from './RecipeFormItem.module.css';
 const RecipeFormRadioGroup = () => {
   return (
     <Styled.FormItem>
-      <h4>Вкажіть складність рецепту:</h4>
+      <h4 className="mb-3">Вкажіть складність рецепту:</h4>
       <div role="group" aria-labelledby="my-radio-group" className="mt-4 ps-5">
-        <label className={'d-block'}>
+        <label className={'d-block my-3'}>
           <Field type="radio" name="complexity" value="Легкий" />
           <span className={style.radio}>Легкий</span>
         </label>
-        <label className={'d-block'}>
+        <label className={'d-block mb-3'}>
           <Field type="radio" name="complexity" value="Помірний" />
           <span className={style.radio}>Помірний</span>
         </label>

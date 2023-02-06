@@ -1,15 +1,32 @@
 import React from 'react';
-import { Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikValues } from 'formik';
 import * as Styled from '../../common/component/component.styled';
 import { LoginSchema } from '../../common/schema/login-yup';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthService from '../service/auth.service';
+import { setIsAuth } from '../../store/authSlice';
+import { useDispatch } from 'react-redux';
+import RecipeService from '../../recipe/services/recipe.service';
 
 interface LoginValues {
-  email: string;
+  login: string;
   password: string;
 }
 
 const Login = () => {
-  const initialValues: LoginValues = { email: '', password: '' };
+  const initialValues: LoginValues = { login: '', password: '' };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values: FormikValues) => {
+    AuthService.login(values).then((res) => {
+      dispatch(setIsAuth(true));
+      localStorage.setItem('token', 'Bearer ' + res.data.accessToken);
+      RecipeService.setToken();
+      navigate('/');
+    });
+  };
+
   return (
     <div className="d-flex justify-content-center flex-column h-100">
       <h1 style={{ fontSize: '2rem' }}>
@@ -18,27 +35,23 @@ const Login = () => {
       <p style={{ fontSize: '1.25rem', marginBottom: '-10px' }}>
         Увійдіть для можливості додавати рецепти, коментарі та вподобання.
       </p>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={LoginSchema}
-        onSubmit={(values) => {
-          // same shape as initial values
-          console.log(values);
-        }}>
+      <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleSubmit}>
         {({ errors, touched }) => (
           <Form>
-            <Styled.Input type="email" name="email" placeholder="Пошта" />
-            {errors.email && touched.email ? (
-              <Styled.ErrorText>{errors.email}</Styled.ErrorText>
+            <Field as={Styled.Input} type="email" name="login" placeholder="Пошта" />
+            {errors.login && touched.login ? (
+              <Styled.ErrorText>{errors.login}</Styled.ErrorText>
             ) : null}
-            <Styled.Input type="password" name="password" placeholder="Пароль" />
+            <Field as={Styled.Input} type="password" name="password" placeholder="Пароль" />
             {errors.password && touched.password ? (
               <Styled.ErrorText>{errors.password}</Styled.ErrorText>
             ) : null}
             <div className="w-100 d-flex justify-content-between">
-              <Styled.OutlineButton width={'265px'} borderRadius={'8px'} color={'green'}>
-                Не маю акаунту
-              </Styled.OutlineButton>
+              <Link to="/auth/register">
+                <Styled.OutlineButton width={'265px'} borderRadius={'8px'} color={'green'}>
+                  Не маю акаунту
+                </Styled.OutlineButton>
+              </Link>
               <Styled.FilledButton
                 backgroundColor="green"
                 width="250px"

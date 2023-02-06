@@ -1,0 +1,12 @@
+html, body {
+    font-family: "Microsoft New Tai Lue", sans-serif !important;
+    color: #292929;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700 !important;
+}
+
+.h-100vh {
+    height: 100vh;
+}

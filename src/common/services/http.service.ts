@@ -1,10 +1,11 @@
-import axios, { AxiosStatic, AxiosRequestConfig, AxiosHeaders } from 'axios';
+import axios, { AxiosStatic, AxiosRequestConfig, AxiosHeaders, AxiosError } from 'axios';
 import { REACT_APP_SERVER_URL } from '../const/app-keys.const';
+import { toast } from 'react-toastify';
 
 class HttpService {
   private readonly baseUrl: string;
 
-  private fetchingService: AxiosStatic;
+  fetchingService: AxiosStatic;
 
   private readonly apiVersion: string;
 
@@ -12,15 +13,24 @@ class HttpService {
     this.baseUrl = baseUrl || '';
     this.fetchingService = fetchingService;
     this.apiVersion = apiVersion;
+    this.fetchingService.defaults.headers.common = { Authorization: localStorage.getItem('token') };
+    this.fetchingService.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error: AxiosError<{ detail: string }>) {
+        console.log(error?.response?.data?.detail);
+        toast.error(error?.response?.data?.detail, {
+          autoClose: 2000,
+          toastId: 'customId'
+        });
+        return Promise.reject(error);
+      }
+    );
   }
 
   private getFullApiUrl(url: string) {
     return `${this.baseUrl}/${this.apiVersion}/${url}`;
-  }
-
-  private populateTokenToHeaderConfig(config: AxiosRequestConfig) {
-    config.headers = { ...config.headers } as AxiosHeaders;
-    config.headers.set('Authorization', localStorage.getItem('token'));
   }
 
   private extractUrlAndDataFromConfig({
@@ -31,30 +41,14 @@ class HttpService {
     return configWithoutDataAndUrl;
   }
 
-  get<T>(config: AxiosRequestConfig<T>, withAuth = true) {
-    if (withAuth) {
-      this.populateTokenToHeaderConfig(config);
-    }
+  get<T>(config: AxiosRequestConfig<T>) {
     return this.fetchingService.get<T>(
       this.getFullApiUrl(config.url || ''),
       this.extractUrlAndDataFromConfig(config)
     );
   }
 
-  delete<T>(config: AxiosRequestConfig<T>, withAuth = true) {
-    if (withAuth) {
-      this.populateTokenToHeaderConfig(config);
-    }
-    return this.fetchingService.delete<T>(
-      this.getFullApiUrl(config.url || ''),
-      this.extractUrlAndDataFromConfig(config)
-    );
-  }
-
-  post<T>(config: AxiosRequestConfig, withAuth = true) {
-    if (withAuth) {
-      this.populateTokenToHeaderConfig(config);
-    }
+  post<T>(config: AxiosRequestConfig) {
     return this.fetchingService.post<T>(
       this.getFullApiUrl(config.url || ''),
       config.data,
@@ -62,16 +56,26 @@ class HttpService {
     );
   }
 
-  put<T>(config: AxiosRequestConfig, withAuth = true) {
-    if (withAuth) {
-      this.populateTokenToHeaderConfig(config);
-    }
-    return this.fetchingService.put<T>(
-      this.getFullApiUrl(config.url || ''),
-      config.data,
-      this.extractUrlAndDataFromConfig(config)
-    );
-  }
+  // delete<T>(config: AxiosRequestConfig<T>, withAuth = true) {
+  //   if (withAuth) {
+  //     this.populateTokenToHeaderConfig(config);
+  //   }
+  //   return this.fetchingService.delete<T>(
+  //     this.getFullApiUrl(config.url || ''),
+  //     this.extractUrlAndDataFromConfig(config)
+  //   );
+  // }
+
+  // put<T>(config: AxiosRequestConfig, withAuth = true) {
+  //   if (withAuth) {
+  //     this.populateTokenToHeaderConfig(config);
+  //   }
+  //   return this.fetchingService.put<T>(
+  //     this.getFullApiUrl(config.url || ''),
+  //     config.data,
+  //     this.extractUrlAndDataFromConfig(config)
+  //   );
+  // }
 }
 
 export default HttpService;
